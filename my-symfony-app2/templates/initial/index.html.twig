@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+        <style>
+            h1 {
+                width:1000px;
+                margin:50px auto;
+            }
+            .box {
+                background-color:lightgray;
+                width:500px;
+                height:200px;
+                display:inline-block;
+                border-radius:7px;
+                font-size:20px;
+            }
+            .btn {
+                background-color:darkslategray;
+                color:white;
+                width:230px;
+                height:70px;
+                line-height:70px;
+                text-align:center;
+                border-radius:7px;
+                margin:0 auto;
+            }
+            .btn:hover {
+                cursor:pointer;
+                background-color:black;
+            }
+            .box p {
+                width:370px;
+                display:block;
+                margin:30px auto 0 auto;
+            }
+            a {
+                color:black;
+                cursor:default;
+                text-decoration:none;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>ようこそ<strong>Symfony Demo</strong>アプリケーションへ</h1>
+        <a href="http://127.0.0.1:8000/blog/page/1">
+        <div class="box">
+            <p>デモアプリケーションの<strong>公開セクション</strong>を確認する</p>
+            <div class="btn">
+                <i class="fas fa-users">アプリケーションへ</i>
+            </div>
+        </div>
+        </a>
+        <div class="box">
+            <p>デモアプリケーションの<strong>管理セクション</strong>を確認する</p>
+            <div class="btn">
+                <i class="fas fa-lock">バックエンドへ</i>
+            </div>
+        </div>
+    </body>
+</html>
+

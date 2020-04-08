@@ -1,0 +1,8 @@
+ {% import 'macro.html.twig' as m %}
+
+ <table>
+     {{ m.label('text', 'Name', 'noname') }}
+     {{ m.label('number', 'Age', '0') }}
+     {{ m.label('email', 'Mail', 'no@mail') }}
+     {{ m.submit('Send') }}
+ </table>

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Person;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,8 +15,10 @@ class HelloController extends AbstractController
      */
     public function index(Request $request)
     {
+        $repository=$this->getDoctrine()->getRepository(Person::class);
+        $data=$repository->findall();
         return $this->render('hello/index.html.twig', [
-            'message'=>'これはサンプルのテンプレート画面です。',
+            'data'=>$data,
             'title'=>'Hello',
         ]);
     }

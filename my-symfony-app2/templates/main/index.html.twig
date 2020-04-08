@@ -1,0 +1,14 @@
+{% extends 'base2.html.twig' %}
+{% import 'macro.html.twig' as m %}
+
+{% block body %}
+
+    {% for item in data %}
+        {% if (11-(page_number-1)*10)<=item.id and item.id<=((11/10)|round(0, 'floor')-page_number+2)*10 %}
+            {{ m.article(item.title,item.date,item.author,item.content,item.id)}}
+        {% endif %}
+    {% endfor %}
+    {{ m.pager(11, 10, page_number) }}
+
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+    <style>
+        input {
+            margin-left:70px;
+            width:700px;
+            height:30px;
+            line-height:20px;
+            border:3px solid lightgray;
+            border-radius:3px;
+            margin-top:50px;
+            padding-left:15px;
+            font-size:15px;
+        }
+        ::placeholder {
+            color:lightgray;
+        }
+    </style>
+<div class="search">
+    <input type="text" name="search" placeholder="検索する...">
+</div>
+{% endblock %}
