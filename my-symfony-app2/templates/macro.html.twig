@@ -76,7 +76,6 @@
     {% else %}
         <div class="page">後へ</div>
     {% endif %}
-
 </div>
 {% endmacro %}
 
@@ -104,4 +103,69 @@
         <p><i class="fas fa-user"></i>{{ author }}</p>
         <div class="content">{{ content }}</div>
     </div>
+{% endmacro %}
+
+{% macro comment_form() %}
+<style>
+    .comment_box {
+        background-color:lightgray;
+        width:700px;
+        color:darkgreen;
+        height:500px;
+        position:relative;
+        margin-left:70px;
+    }
+    .submit {
+        background-color:darkgreen;
+        color:white;
+        width:200px;
+        height:50px;
+        border-radius:5px;
+        text-align:center;
+        line-height:50px;
+        margin-bottom:20px;
+        position:absolute;
+        right:70px;
+    }
+    .text {
+        margin:30px auto 0 auto;
+        text-align:center;
+    }
+    textarea {
+        border-radius:5px;
+        padding:20px;
+        font-size:20px;
+    }
+    h2 i {
+        margin-left:70px;
+        padding-top:40px;
+    }
+    .submit i {
+        margin-right:10px;
+    }
+    .submit:hover {
+        cursor:pointer;
+        background-color:black;
+    }
+    .comment_box p {
+        margin-top:0;
+        color:darkgreen;
+        margin-left:70px;
+        padding:0;
+        color:darkgreen;
+        font-size:15px;
+    }
+</style>
+<div class="comment_box">
+    <h2>
+        <i class="fas fa-comment"></i>コメントを追加
+    </h2>
+    <div class="text">
+        <textarea name="comment" cols="50" rows=10"></textarea>
+    </div>
+    <p>Comments not complying with our Code of Conduct will be moderated.</p>
+    <div class="submit">
+        <i class="fas fa-paper-plane"></i>コメントを投稿
+    </div>
+</div>
 {% endmacro %}

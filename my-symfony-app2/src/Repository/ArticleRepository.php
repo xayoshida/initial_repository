@@ -19,6 +19,16 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+
+    public function findByTitle($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.title like ?1')
+            ->setParameter(1, '%' . $value . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */

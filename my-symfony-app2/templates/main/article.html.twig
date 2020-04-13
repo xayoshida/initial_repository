@@ -3,7 +3,24 @@
 
 
 {% block body %}
+    <style>
+        input {
+            margin-left:70px;
+            width:700px;
+            height:30px;
+            line-height:20px;
+            border:3px solid lightgray;
+            border-radius:3px;
+            margin-top:50px;
+            padding-left:15px;
+            font-size:15px;
+        }
+        ::placeholder {
+            color:lightgray;
+        }
+    </style>
     {% for item in result %}
-{{ m.show_article( item.title, item.date,item.author,item.content, item.id)}}
-        {% endfor %}
+        {{ m.show_article( item.title, item.date,item.author,item.content, item.id)}}
+    {% endfor %}
+    {{ m.comment_form() }}
 {% endblock %}

@@ -1,4 +1,6 @@
 {% extends 'base2.html.twig' %}
+{% import 'macro.html.twig' as m %}
+
 
 {% block body %}
     <style>
@@ -17,9 +19,12 @@
             color:lightgray;
         }
     </style>
-<div class="search">
-    <form action="/blog/search/result" method="post">
-    <input type="text" name="search_article" placeholder="検索する...">
-    </form>
-</div>
+    <div class="search">
+        <form action="/blog/search/result" method="post">
+            <input type="text" name="search_article" placeholder="検索する...">
+        </form>
+    </div>
+    {% for item in result %}
+        {{ m.article( item.title, item.date,item.author,item.content, item.id)}}
+    {% endfor %}
 {% endblock %}

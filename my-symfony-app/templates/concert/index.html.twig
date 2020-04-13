@@ -3,8 +3,14 @@
 	<div>
 		<h1>公演情報</h1>
 		<ul>
-			<li>2015年　東京文化会館</li>
-			<li>2014年　鎌倉芸術館</li>
+			{% for concertInfo in concertList %}
+			<li>
+				{{ loop.index }}
+				{{ concertInfo.date }}
+				{{ concertInfo.place }}
+				{{ concertInfo.time }}開演
+			</li>
+			{% endfor %}
 		</ul>
 	</div>
 </body>

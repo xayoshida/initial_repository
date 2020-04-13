@@ -9,37 +9,52 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends AbstractController
 {
-
     /**
-     * @Route("/blog/page/{page_number}", name="blog")
+     * @Route("/blog/page/{page_number}", name = "blog")
      */
-    public  function index1(Request $request, $page_number)
+    public function index1(Request $request, $page_number)
     {
-        $repository=$this->getDoctrine()->getRepository(Article::class);
-        $data=$repository->findall();
+        $repository = $this->getDoctrine()->getRepository(Article::class);
+        $data = $repository->findall();
         return $this->render('main/index.html.twig', [
-            'data'=>$data,
-            'page_number'=>$page_number,
+            'data' => $data,
+            'page_number' => $page_number,
     ]);
     }
+
     /**
-     * @Route("/blog/search", name="search")
+     * @Route("/blog/search", name = "search")
      */
-    public  function index2(Request $request)
+    public function index2(Request $request)
     {
         return $this->render('main/search.html.twig', [
 
     ]);
     }
+
     /**
-     * @Route("/blog/posts/{article_id}", name="post")
+     * @Route("/blog/posts/{article_id}", name = "post")
      */
-    public  function index3(Request $request, $article_id)
+    public function index3(Request $request, $article_id)
     {
-        $repository=$this->getDoctrine()->getRepository(Article::class);
-        $result=$repository->findBy(['id'=>$article_id]);
+        $repository = $this->getDoctrine()->getRepository(Article::class);
+        $result = $repository->findBy(['id' => $article_id]);
         return $this->render('main/article.html.twig', [
-            'result'=>$result,
+            'result' => $result,
         ]);
     }
+
+    /**
+     * @Route("/blog/search/result", name = "search_result")
+     */
+    public function index4(Request $request)
+    {
+        $input = $request->request->get('search_article');
+        $repository = $this->getDoctrine()->getRepository(Article::class);
+        $result = $repository->findByTitle($input);
+        return $this->render('main/search_result.html.twig', [
+            'result' => $result,
+        ]);
+    }
+
 }
