@@ -2,13 +2,71 @@
 {% import 'macro.html.twig' as m %}
 
 {% block body %}
+    <style>
+        .box {
+            width:800px;
+            margin-left:70px;
+            margin-bottom:50px;
+        }
+        h2 {
+            color:lightseagreen;
+            margin-bottom:0;
+        }
+        h2:hover {
+            cursor:pointer;
+            text-decoration:underline;
+        }
+        p {
+            display:inline-block;
+            color:darkgray;
+        }
+        .page {
+            background-color: darkseagreen;
+            color:white;
+            display:inline-block;
+            width:50px;
+            height:50px;
+            margin:0px;
+            text-align:center;
+            line-height:50px;
+            padding:0px;
+        }
+        .pagebox{
+            margin:0 0 0 300px;
+            padding:0;
+        }
+        .page:hover {
+            cursor: pointer;
+            background-color: darkgreen;
+        }
+    </style>
 
     {% for item in data %}
         {% if (11-(page_number-1)*10)<=item.id and item.id<=((11/10)|round(0, 'floor')-page_number+2)*10 %}
-            {{ m.article(item.title,item.date,item.author,item.content,item.id)}}
+            <div class="box">
+                <a href="http://127.0.0.1:8000/blog/posts/{{ item.id }}"><h2>{{ item.title }}</h2></a>
+                <p><i class="fas fa-calendar-alt"></i>{{ item.date }}</p>
+                <p><i class="fas fa-user"></i>{{ item.author }}</p>
+                <div class="content">{{ item.content }}</div>
+            </div>
         {% endif %}
     {% endfor %}
-    {{ m.pager(11, 10, page_number) }}
+
+    <div class="pagebox">
+        {% if page_number>1 %}
+            <a href="http://127.0.0.1:8000/blog/page/{{ page_number-1 }}"><div class="page">前へ</div></a>
+        {% else %}
+            <div class="page">前へ</div>
+        {% endif %}
+        {% for i in 1.. 11/10+11%10 %}
+            <a href="http://127.0.0.1:8000/blog/page/{{ i }}"><div class="page">{{ i }}</div></a>
+        {% endfor %}
+        {% if page_number<11/10 %}
+            <a href="http://127.0.0.1:8000/blog/page/{{ page_number+1 }}"><div class="page">後へ</div></a>
+        {% else %}
+            <div class="page">後へ</div>
+        {% endif %}
+    </div>
 
 
 {% endblock %}

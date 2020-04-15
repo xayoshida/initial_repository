@@ -1,5 +1,4 @@
 {% extends 'base2.html.twig' %}
-{% import 'macro.html.twig' as m %}
 
 
 {% block body %}
@@ -18,6 +17,24 @@
         ::placeholder {
             color:lightgray;
         }
+
+        .box {
+             width:800px;
+             margin-left:70px;
+             margin-bottom:50px;
+         }
+        h2 {
+            color:lightseagreen;
+            margin-bottom:0;
+        }
+        h2:hover {
+            cursor:pointer;
+            text-decoration:underline;
+        }
+        p {
+            display:inline-block;
+            color:darkgray;
+        }
     </style>
     <div class="search">
         <form action="/blog/search/result" method="post">
@@ -25,6 +42,11 @@
         </form>
     </div>
     {% for item in result %}
-        {{ m.article( item.title, item.date,item.author,item.content, item.id)}}
+        <div class="box">
+            <a href="http://127.0.0.1:8000/blog/posts/{{ result.id }}"><h2>{{ title }}</h2></a>
+            <p><i class="fas fa-calendar-alt"></i>{{ result.date }}</p>
+            <p><i class="fas fa-user"></i>{{ result.author }}</p>
+            <div class="content">{{ result.content }}</div>
+        </div>
     {% endfor %}
 {% endblock %}
