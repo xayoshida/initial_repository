@@ -1,5 +1,4 @@
 {% extends 'base2.html.twig' %}
-{% import 'macro.html.twig' as m %}
 
 
 {% block body %}
@@ -17,7 +16,8 @@
             color:white;
             width:200px;
             height:50px;
-            border-radius:5px;
+            font-size:15px;
+            border-radius:8px;
             text-align:center;
             line-height:50px;
             margin-bottom:20px;
@@ -39,6 +39,10 @@
         }
         .submit i {
             margin-right:10px;
+        }
+        .submit p::before {
+            content:url[https://fontawesome.com/icons/paper-plane?style=solid];
+            font-size:1000px;
         }
         .submit:hover {
             cursor:pointer;
@@ -77,9 +81,31 @@
             font-size:30px;
             width:700px;
         }
-        p {
+        .box p {
             display:inline-block;
             color:darkgray;
+        }
+        input {
+            background-color: black;
+        }
+        .comment_detail {
+            float:left;
+            margin-left:70px;
+            font-size:15px;
+            line-height:15px;
+            width:300px;
+        }
+        .comment_content {
+            float:left;
+        }
+        .comment_detail p {
+            margin:3px 0 0 0;
+        }
+        .show_comments {
+            display:block;
+            width:1000px;
+            min-height:50px;
+            margin-top:30px;
         }
     </style>
 
@@ -92,15 +118,32 @@
         </div>
     {% endfor %}
     <div class="comment_box">
+        {{ form_start(form) }}
         <h2>
             <i class="fas fa-comment"></i>コメントを追加
         </h2>
         <div class="text">
-            <textarea name="comment" cols="50" rows=10"></textarea>
+            {{ form_widget(form.content, {'attr':{'class':'text', 'cols':'50', 'rows':'10'}}) }}
         </div>
         <p>Comments not complying with our Code of Conduct will be moderated.</p>
         <div class="submit">
+            {{ form_widget(form.save, {'attr':{'class':'submit', 'value':'コメントを投稿'}}) }}
             <i class="fas fa-paper-plane"></i>コメントを投稿
         </div>
+        {{ form_end(form) }}
     </div>
+
+    <h2><i class="fas fa-comments"></i>コメント</h2>
+    {% for item in comment %}
+        <div class="show_comments">
+            <div class="comment_detail">
+                <p>{{ item.article.author }}</p>
+                <p>コメント投稿日時</p>
+                <p>{{ item.article.date }}</p>
+            </div>
+            <div class="comment_content">
+                {{ item.content }}
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

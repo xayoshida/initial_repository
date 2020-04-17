@@ -4,9 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Form\ArticleType;
+use App\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -44,25 +48,33 @@ class MainController extends AbstractController
      */
     public function index3(Request $request, $article_id)
     {
+        $repository = $this->getDoctrine()->getRepository(Article::class);
+        $result = $repository->findBy(['id'=>$article_id]);
         $comment = new Comment;
-        $form = $this->createFormBuilder()
-            ->add('content', TextType::class)
-            ->add('posted', DateTimeType::class)
-            ->add('submit', SubmitType::class)
+        $comment->setArticle($result[0]);
+        $form = $this->createFormBuilder($comment)
+            ->add('content', TextareaType::class)
+            ->add('posted')
+            ->add('save', SubmitType::class, ['label'=>'コメントを投稿',])
             ->getForm();
-        if ($request->getMethod() == 'POST') {
+        $form->handleRequest($request);
+
+        $repository2 = $this->getDoctrine()->getRepository(Comment::class);
+        $result2 = $repository2->findBy(['article'=>$result[0]]);
+        //$result2 = $repository2->findBy(['id'=>'1']);
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $comment = $form->getData();
-            $form->handleRequest($request);
-            $data = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($comment);
             $em->flush();
             return $this->redirect('http://127.0.0.1:8000');
         } else {
-            $repository = $this->getDoctrine()->getRepository(Article::class);
-            $result = $repository->findBy(['id' => $article_id]);
             return $this->render('main/article.html.twig', [
                 'result' => $result,
+                //'comment' => $result[0],
+                'comment' => $result2,
+                'form' => $form->createView(),
             ]);
         }
 
@@ -84,50 +96,23 @@ class MainController extends AbstractController
     /**
      * @Route("/blog/add", name = "blog_add")
      */
-    public function index5()
+    public function index5(Request $request)
     {
         $article = new Article;
-        $form = $this->createFormBuilder($article)
-            ->add('title', TextType::class)
-            ->add('date', TextType::class)
-            ->add('author', TextType::class)
-            ->add('content', TextType::class)
-            ->add('submit', SubmitType::class)
-            ->getForm();
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
 
-
-        return $this->render('main/blog_add.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/blog/add", name = "blog_add")
-     * @Method("post")
-     */
-    public function index6(Request $request)
-    {
-        $article = new Article;
-        $form = $this->createFormBuilder($article)
-            ->add('title', TextType::class)
-            ->add('date', TextType::class)
-            ->add('author', TextType::class)
-            ->add('content', TextType::class)
-            ->add('submit', SubmitType::class)
-            ->getForm();
-        if ($request->getMethod() == 'POST') {
-            $person = $form->getData();
-            $form->handleRequest($request);
-            $data = $form->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $article = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();
+
             return $this->redirect('http://127.0.0.1:8000');
         } else {
             return $this->render('main/blog_add.html.twig', [
                 'form' => $form->createView(),
             ]);
         }
-
     }
 }
